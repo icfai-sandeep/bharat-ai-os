@@ -47,4 +47,6 @@ def call_grok(prompt):
         r = requests.post(url, json=payload, timeout=10)
         return r.json()["choices"][0]["message"]["content"]
     except:
-        return
+        return "Error"
+
+handler = Mangum(app)
