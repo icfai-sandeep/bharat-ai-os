@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BharatAI - Har Ghar Ka AI Dost</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+       .float-animation { animation: float 3s ease-in-out infinite; }
+       .glass { background: rgba(255,255,255,0.8); backdrop-filter: blur(12px); }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-orange-50 via-white to-green-50">
+    <!-- Navbar -->
+    <nav class="glass sticky top-0 z-50 p-4 shadow-sm">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-black bg-gradient-to-r from-orange-600 to-pink-600 bg-clip-text text-transparent">🇮🇳 BharatAI</h1>
+            <button onclick="buyPlan('Tiffin Plan', 99)" class="bg-gradient-to-r from-orange-500 to-pink-500 text-white px-6 py-2 rounded-full font-bold hover:scale-105 transition">
+                ₹99/month Lo
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="text-center py-20 px-4">
+        <div class="float-animation text-6xl mb-4">🤖</div>
+        <h2 class="text-5xl font-black mb-4">AI Jo <span class="bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent">Aapki Bhasha</span> Bole</h2>
+        <p class="text-xl text-gray-600 mb-8">Student ho ya Dadi-Dada, Naukri dhund rahe ho ya Ghar chalate ho<br> <b>BharatAI Dost</b> sabki help karega</p>
+        <div class="max-w-2xl mx-auto glass p-6 rounded-2xl shadow-xl">
+            <textarea id="question" class="w-full p-4 border-2 border-orange-200 rounded-xl text-lg" rows="2" placeholder="Yahan likho... Jaise: '10th ka Science samjhao'"></textarea>
+            <button onclick="askDost()" class="bg-green-500 text-white px-8 py-3 rounded-full mt-4 text-lg font-bold w-full hover:bg-green-600">
+                🔊 Dost Se Pucho - Free Demo
+            </button>
+            <button onclick="startVoice()" class="bg-orange-500 text-white px-6 py-2 rounded-full mt-3 font-bold w-full">
+                🎤 Bolo Abhi
+            </button>
+            <p class="text-xs text-gray-500 mt-2">3 free demo रोज. फिर ₹99/month unlimited.</p>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="max-w-5xl mx-auto px-4 py-16" id="pricing">
+        <h3 class="text-4xl font-bold text-center mb-12">Sabki Jeb Ke Hisab Se 💰</h3>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-white p-8 rounded-3xl shadow-lg border-2 border-gray-100">
+                <h4 class="font-bold text-2xl">Chai Plan</h4>
+                <p class="text-4xl font-black my-4">₹0 <span class="text-sm font-normal">/forever</span></p>
+                <ul class="text-sm space-y-2 mb-6"><li>✓ 3 tools/day</li><li>✓ Basic AI chat</li></ul>
+                <button onclick="window.location.href='/dashboard'" class="border-2 border-gray-300 w-full py-3 rounded-full font-bold">Free Chalu Karo</button>
+            </div>
+            <div class="bg-gradient-to-br from-orange-500 to-pink-500 text-white p-8 rounded-3xl shadow-2xl scale-105">
+                <div class="bg-yellow-300 text-orange-600 px-3 py-1 rounded-full text-xs font-bold inline-block mb-2">SABSE POPULAR ⭐</div>
+                <h4 class="font-bold text-2xl">Tiffin Plan</h4>
+                <p class="text-4xl font-black my-4">₹99 <span class="text-sm font-normal">/month</span></p>
+                <p class="text-sm mb-4 opacity-90">Ek pizza se sasta, Poora mahina AI</p>
+                <ul class="text-sm space-y-2 mb-6"><li>✓ 50 tools/day</li><li>✓ Voice download</li><li>✓ Sab zone unlock</li></ul>
+                <button onclick="buyPlan('Tiffin Plan', 99)" class="bg-white text-orange-500 w-full py-3 rounded-full font-bold hover:scale-105 transition">Abhi Kharido - UPI</button>
+            </div>
+            <div class="bg-white p-8 rounded-3xl shadow-lg border-2 border-gray-100">
+                <h4 class="font-bold text-2xl">Parivaar Plan</h4>
+                <p class="text-4xl font-black my-4">₹499 <span class="text-sm font-normal">/month</span></p>
+                <ul class="text-sm space-y-2 mb-6"><li>✓ 5 members</li><li>✓ Kids + Senior mode</li><li>✓ Priority support</li></ul>
+                <button onclick="buyPlan('Parivaar Plan', 499)" class="border-2 border-orange-500 text-orange-500 w-full py-3 rounded-full font-bold">5 Member Ke Liye - UPI</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Dost Widget -->
+    <div id="aiDost" class="fixed bottom-5 right-5 z-50">
+        <button onclick="toggleDost()" class="bg-gradient-to-r from-orange-500 to-pink-500 text-white w-16 h-16 rounded-full shadow-2xl text-2xl animate-bounce">👋</button>
+        <div id="dostBox" class="hidden w-80 h-96 bg-white rounded-2xl shadow-2xl mr-4 mb-4 flex-col">
+            <div class="bg-gradient-to-r from-orange-500 to-pink-500 text-white p-4 rounded-t-2xl">
+                <h3 class="font-bold">🤖 BharatAI Dost</h3>
+                <p class="text-xs opacity-90">Online hai, pucho kuch bhi</p>
+            </div>
+            <div id="chatMsg" class="flex-1 p-4 overflow-y-auto text-sm space-y-3">
+                <div class="bg-gray-100 p-3 rounded-lg">Namaste! 🙏 Main BharatAI Dost hu. Padhai, Naukri, Ghar kaam - kisme help chahiye?</div>
+            </div>
+            <div class="p-3 border-t flex gap-2">
+                <input id="userMsg" type="text" placeholder="Yahan likho..." class="flex-1 border rounded-full px-4 py-2 text-sm">
+                <button onclick="talkToDost()" class="bg-orange-500 text-white px-4 rounded-full">➤</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // YAHAN APNA UPI ID DAALO
+        const UPI_ID = "yourname@upi";
+        const MERCHANT_NAME = "BharatAI";
+
+        function buyPlan(planName, amount) {
+            // Direct UPI link - Google Pay/PhonePe khul jayega
+            const upiLink = `upi://pay?pa=${UPI_ID}&pn=${encodeURIComponent(MERCHANT_NAME)}&am=${amount}&cu=INR&tn=${encodeURIComponent(planName + ' Monthly')}`;
+            window.location.href = upiLink;
+
+            // Payment ke baad user ko batane ke liye
+            setTimeout(() => {
+                alert("Payment karne ke baad screenshot WhatsApp karo: 9999. Turant activate kar denge!");
+            }, 3000);
+        }
+
+        function askDost() {
+            const q = document.getElementById('question').value;
+            if(!q) return alert('Sawal to likho bhai!');
+            speechSynthesis.speak(new SpeechSynthesisUtterance('Demo: ' + q + ' ka jawab ₹99 wale plan mei milega!'));
+            setTimeout(() => { window.location.href = '#pricing' }, 2000);
+        }
+
+        function startVoice() {
+            const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'hi-IN';
+            recognition.start();
+            recognition.onresult = (e) => {
+                document.getElementById('question').value = e.results[0][0].transcript;
+                askDost();
+            }
+        }
+
+        let dostOpen = false;
+        function toggleDost() {
+            dostOpen =!dostOpen;
+            document.getElementById('dostBox').classList.toggle('hidden');
+        }
+
+        async function talkToDost() {
+            const msg = document.getElementById('userMsg').value;
+            if(!msg) return;
+
+            const chatBox = document.getElementById('chatMsg');
+            chatBox.innerHTML += `<div class="bg-blue-100 p-3 rounded-lg ml-8 text-right">${msg}</div>`;
+            document.getElementById('userMsg').value = '';
+            chatBox.innerHTML += `<div class="bg-gray-100 p-3 rounded-lg mr-8">Soch raha hu...</div>`;
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            try {
+                const res = await fetch('/api/ask', {
+                    method: 'POST',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify({
+                        user_id: 'guest_' + Date.now(),
+                        name: 'Dost',
+                        task: msg,
+                        type: 'mixed'
+                    })
+                });
+                const data = await res.json();
+
+                chatBox.innerHTML = chatBox.innerHTML.replace('<div class="bg-gray-100 p-3 rounded-lg mr-8">Soch raha hu...</div>', '');
+                let reply = data.answer || data.message;
+                chatBox.innerHTML += `<div class="bg-orange-100 p-3 rounded-lg mr-8">${reply}</div>`;
+                chatBox.scrollTop = chatBox.scrollHeight;
+
+            } catch(e) {
+                chatBox.innerHTML += `<div class="bg-red-100 p-3 rounded-lg mr-8">Network gadbad hai bhai. Phir try karo.</div>`;
+            }
+        }
+    </script>
+</body>
+</html>
